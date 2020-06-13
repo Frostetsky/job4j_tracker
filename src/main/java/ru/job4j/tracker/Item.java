@@ -4,17 +4,8 @@ public class Item {
     private String id;
     private String name;
 
-    public Item(String id) {
-        this.id = id;
-    }
-
-    public Item(String id, String name) {
-        this.id = id;
+    public Item(String name) {
         this.name = name;
-    }
-
-    public Item() {
-
     }
 
     public String getId() {
@@ -31,5 +22,10 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return id + " | " + name;
     }
 }

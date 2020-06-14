@@ -82,17 +82,22 @@ public class Tracker {
 
     public boolean replace(String id, Item item) {
         int index = indexOf(id);
-        item.setId(id);
-        items[index] = item;
-        return true;
+        boolean rsl = index != -1;
+        if (rsl) {
+            items[index] = item;
+        }
+        return rsl;
     }
 
     public boolean delete(String id) {
         int index = indexOf(id);
-        items[index] = null;
-        System.arraycopy(items, index + 1, items, index, position - index);
-        items[position - 1] = null;
-        position--;
-        return true;
+        boolean rsl = index != - 1;
+        if (rsl) {
+            items[index] = null;
+            System.arraycopy(items, index + 1, items, index, position - index);
+            items[position - 1] = null;
+            position--;
+        }
+        return rsl;
     }
 }

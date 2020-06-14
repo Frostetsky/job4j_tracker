@@ -38,14 +38,8 @@ public class Tracker {
      * @return Нужная заявка.
      */
     public Item findById(String id) {
-        Item item = null;
-        for (int i = 0; i < this.items.length; i++) {
-            if (this.items[i].getId().equals(id)) {
-                item = this.items[i];
-                break;
-            }
-        }
-        return item;
+        int index = indexOf(id);
+        return index != -1 ? items[index] : null;
     }
 
 
@@ -54,19 +48,7 @@ public class Tracker {
      * @return Массив без null элементов.
      */
     public Item[] findAll() {
-        Item[] array = new Item[this.items.length];
-        int size = 0;
-        for (int i = 0; i < position; i++) {
-            if (this.items[i] != null) {
-                array[size] = this.items[i];
-                size++;
-            }
-        }
-        array = Arrays.copyOf(array, size);
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i].toString());
-        }
-        return array;
+        return Arrays.copyOf(items, position );
     }
 
     /**
@@ -75,7 +57,7 @@ public class Tracker {
      * @return Массив итемов с одинаковыми именами.
      */
     public Item[] findByName(String key) {
-        Item[] array = new Item[this.items.length];
+        Item[] array = new Item[position];
         int size = 0;
         for (int i = 0; i < position; i++) {
             if (key.equals(this.items[i].getName())) {
@@ -84,17 +66,24 @@ public class Tracker {
             }
         }
         array = Arrays.copyOf(array, size);
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i].toString());
-        }
         return array;
     }
 
-    /**
-     * Геттер для Теста.
-     * @return Массив items.
-     */
-    public Item[] getItems() {
-        return items;
+    private int indexOf(String id) {
+        int rsl = -1;
+        for (int index = 0; index < position; index++) {
+            if (items[index].getId().equals(id)) {
+                rsl = index;
+                break;
+            }
+        }
+        return rsl;
+    }
+
+    public boolean replace(String id, Item item) {
+        int index = indexOf(id);
+        item.setId(id);
+        items[index] = item;
+        return true;
     }
 }

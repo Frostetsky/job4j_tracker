@@ -48,7 +48,7 @@ public class Tracker {
      * @return Массив без null элементов.
      */
     public Item[] findAll() {
-        return Arrays.copyOf(items, position );
+        return Arrays.copyOf(items, position);
     }
 
     /**
@@ -84,6 +84,15 @@ public class Tracker {
         int index = indexOf(id);
         item.setId(id);
         items[index] = item;
+        return true;
+    }
+
+    public boolean delete(String id) {
+        int index = indexOf(id);
+        items[index] = null;
+        System.arraycopy(items, index + 1, items, index, position - index);
+        items[position - 1] = null;
+        position--;
         return true;
     }
 }

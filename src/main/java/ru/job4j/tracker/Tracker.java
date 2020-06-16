@@ -84,6 +84,7 @@ public class Tracker {
         int index = indexOf(id);
         boolean rsl = index != -1;
         if (rsl) {
+            item.setId(id);
             items[index] = item;
         }
         return rsl;
@@ -93,7 +94,6 @@ public class Tracker {
         int index = indexOf(id);
         boolean rsl = index != - 1;
         if (rsl) {
-            items[index] = null;
             System.arraycopy(items, index + 1, items, index, position - index);
             items[position - 1] = null;
             position--;

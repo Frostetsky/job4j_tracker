@@ -49,7 +49,7 @@ public class StartUI {
                 String id = scanner.next();
                 Item item = tracker.findById(id);
                 if (item != null) {
-                    item.toString();
+                    System.out.println(item.toString());
                 } else {
                     System.out.println("Item not found");
                 }

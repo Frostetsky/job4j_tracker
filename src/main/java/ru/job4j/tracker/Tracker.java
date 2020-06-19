@@ -69,6 +69,11 @@ public class Tracker {
         return array;
     }
 
+    /**
+     * Метод возвращает индекс ячейки массива по его id.
+     * @param id - id заявки.
+     * @return индекс ячейки под которым содержится нужный объект.
+     */
     private int indexOf(String id) {
         int rsl = -1;
         for (int index = 0; index < position; index++) {
@@ -80,6 +85,12 @@ public class Tracker {
         return rsl;
     }
 
+    /**
+     * Метод заменяет заявку по id.
+     * @param id - id который необходимо заменить.
+     * @param item новая заявка.
+     * @return успешность результата выполнения.
+     */
     public boolean replace(String id, Item item) {
         int index = indexOf(id);
         boolean rsl = index != -1;
@@ -89,6 +100,12 @@ public class Tracker {
         }
         return rsl;
     }
+
+    /**
+     * Метод удаляет заявку по её id.
+     * @param id - id заявки.
+     * @return успешность результата выполнения.
+     */
 
     public boolean delete(String id) {
         int index = indexOf(id);

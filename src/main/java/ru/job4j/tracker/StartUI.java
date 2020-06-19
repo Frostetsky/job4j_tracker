@@ -47,20 +47,27 @@ public class StartUI {
                 System.out.println("==== Find item by Id ====");
                 System.out.print("Enter id: ");
                 String id = scanner.next();
-                System.out.println((tracker.findById(id)).toString());
+                Item item = tracker.findById(id);
+                if (item != null) {
+                    item.toString();
+                } else {
+                    System.out.println("Item not found");
+                }
             } else if (select == 5) {
                 System.out.println("==== Find item by Name ====");
                 System.out.print("Enter name: ");
                 String name = scanner.next();
                 Item[] items = tracker.findByName(name);
-                for (int i = 0; i < items.length; i++) {
-                    System.out.println(items[i].toString());
+                if (items != null) {
+                    for (int i = 0; i < items.length; i++) {
+                        System.out.println(items[i].toString());
+                    }
+                } else {
+                    System.out.println("Items not found");
                 }
             } else if (select == 6) {
                 System.out.println("==== Exit program ====");
                 break;
-            } else {
-                System.out.println("==== Invalid menu number ====");
             }
         }
     }

@@ -78,12 +78,12 @@ public class StartUI {
         System.out.println("==== Find item by Name ====");
         String name = input.askStr("Enter name: ");
         Item[] items = tracker.findByName(name);
-        if (items != null) {
-            for (int i = 0; i < items.length; i++) {
-                System.out.println(items[i].toString());
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] != null) {
+                System.out.println(items[i]);
+            } else {
+                System.out.println("Items not found");
             }
-        } else {
-            System.out.println("Items not found");
         }
     }
 

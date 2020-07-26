@@ -1,6 +1,12 @@
 package ru.job4j.tracker;
 
 public class FindItemsByNameAction implements UserAction {
+    private final Output out;
+
+    public FindItemsByNameAction(Output out) {
+        this.out = out;
+    }
+
     @Override
     public String name() {
         return "==== Find item by Name ====";
@@ -12,10 +18,10 @@ public class FindItemsByNameAction implements UserAction {
         Item[] items = tracker.findByName(name);
         if (items.length > 0) {
             for (int i = 0; i < items.length; i++) {
-                System.out.println(items[i]);
+                out.println(items[i]);
             }
         } else {
-            System.out.println("Items not found");
+            out.println("Items not found");
         }
         return true;
     }

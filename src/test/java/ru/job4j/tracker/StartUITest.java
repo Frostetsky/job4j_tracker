@@ -143,7 +143,7 @@ public class StartUITest {
                 new String[] {"0", replacedName, item.getId(),  "1"}
         );
         UserAction[] actions = {
-                new ReplaceAction(),
+                new ReplaceAction(output),
                 new ExitProgramAction(output)
         };
         new StartUI(output).init(in, tracker, actions);

@@ -22,7 +22,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void WhenArrayWasCleaned() {
+    public void whenArrayWasCleaned() {
         Item item1 = new Item("test1");
         Tracker tracker = new Tracker();
         tracker.add(item1);
@@ -33,7 +33,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void PutArrayItemByKey() {
+    public void putArrayItemByKey() {
         Item item1 = new Item("test1");
         Item item2 = new Item("test3");
         Item item3 = new Item("test3");
@@ -49,7 +49,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void AddItemInArray() {
+    public void addItemInArray() {
         Item item = new Item("test1");
         Tracker tracker = new Tracker();
         tracker.add(item);
@@ -89,12 +89,12 @@ public class TrackerTest {
         list.add(item1);
         list.add(item2);
         list.add(item3);
-        Collections.sort(list,itemAscByName);
+        Collections.sort(list, itemAscByName);
         List<Item> expected = new ArrayList<>();
         expected.add(item2);
         expected.add(item3);
         expected.add(item1);
-        assertThat(list,is(expected));
+        assertThat(list, is(expected));
     }
 
     @Test
@@ -107,11 +107,11 @@ public class TrackerTest {
         list.add(item1);
         list.add(item2);
         list.add(item3);
-        Collections.sort(list,itemDescByName);
+        Collections.sort(list, itemDescByName);
         List<Item> expected = new ArrayList<>();
         expected.add(item1);
         expected.add(item3);
         expected.add(item2);
-        assertThat(list,is(expected));
+        assertThat(list, is(expected));
     }
 }

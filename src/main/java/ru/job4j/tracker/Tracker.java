@@ -89,7 +89,7 @@ public class Tracker {
         boolean rsl = index != -1;
         if (rsl) {
             item.setId(id);
-            items.set(index,item);
+            items.set(index, item);
         }
         return rsl;
     }
@@ -102,7 +102,7 @@ public class Tracker {
 
     public boolean delete(String id) {
         int index = indexOf(id);
-        boolean rsl = index != - 1;
+        boolean rsl = index != -1;
         if (rsl) {
             items.remove(index);
         }

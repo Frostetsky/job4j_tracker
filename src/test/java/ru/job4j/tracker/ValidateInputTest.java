@@ -29,6 +29,6 @@ public class ValidateInputTest {
         Input in = new StubInput(
                 new String[] {"73", "First"}
         );
-        new StartUI(out).init(in,tracker,actions);
+        new StartUI(out).init(in, tracker, actions);
     }
 }

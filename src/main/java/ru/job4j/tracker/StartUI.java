@@ -1,45 +1,44 @@
 package ru.job4j.tracker;
 
 public class StartUI {
-    private final Output out;
 
-    public StartUI(Output out) {
-        this.out = out;
-    }
-
-    public void init(Input input, Tracker tracker, UserAction[] actions) {
+    public void init(Input input, Store memTracker, UserAction[] actions) {
         boolean run = true;
         while (run) {
             this.showMenu(actions);
             int select = input.askInt("Select: ");
             if (select < 0 || select >= actions.length) {
-                out.println("Wrong input, you can select: 0 .. " + (actions.length - 1));
+                System.out.println("Wrong input, you can select: 0 .. " + (actions.length - 1));
                 continue;
             }
             UserAction action = actions[select];
-            run = action.execute(input, tracker);
+            run = action.execute(input, memTracker);
         }
     }
     private void showMenu(UserAction[] actions) {
-        out.println("Menu.");
+        System.out.println("Menu.");
         for (int index = 0; index < actions.length; index++) {
-            out.println(index + ". " + actions[index].name());
+            System.out.println(index + ". " + actions[index].name());
         }
     }
 
     public static void main(String[] args) {
-        Output output = new ConsoleOutput();
-        Input input = new ValidateInput(output, new ConsoleInput());
-        Tracker tracker = new Tracker();
-        UserAction[] actions = {
-                new CreateAction(output),
-                new ReplaceAction(output),
-                new ShowAllAction(output),
-                new FindItemByIdAction(output),
-                new FindItemsByNameAction(output),
-                new DeleteAction(output),
-                new ExitProgramAction(output)
-        };
-        new StartUI(output).init(input, tracker, actions);
+        Input input = new ConsoleInput();
+        Input validate = new ValidateInput(input);
+        try (Store tracker = new SqlTracker()) {
+            tracker.init();
+            UserAction[] actions = {
+                    new CreateAction(),
+                    new DeleteAction(),
+                    new ReplaceAction(),
+                    new ShowAllAction(),
+                    new FindItemByIdAction(),
+                    new FindItemsByNameAction(),
+                    new ExitProgramAction(),
+            };
+            new StartUI().init(validate, tracker, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

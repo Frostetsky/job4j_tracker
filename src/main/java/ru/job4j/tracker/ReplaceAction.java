@@ -1,11 +1,6 @@
 package ru.job4j.tracker;
 
 public class ReplaceAction implements UserAction {
-    private final Output out;
-
-    public ReplaceAction(Output out) {
-        this.out = out;
-    }
 
     @Override
     public String name() {
@@ -13,14 +8,14 @@ public class ReplaceAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store store) {
         String name = input.askStr("Enter name: ");
         Item item = new Item(name);
         String id = input.askStr("Enter id: ");
-        if (tracker.replace(id, item)) {
-            out.println("Successfully");
+        if (store.replace(id, item)) {
+            System.out.println("Successfully");
         } else {
-            out.println("Unsuccessfully");
+            System.out.println("Unsuccessfully");
         }
         return true;
     }

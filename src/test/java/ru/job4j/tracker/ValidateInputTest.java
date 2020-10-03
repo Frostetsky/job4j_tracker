@@ -9,26 +9,24 @@ public class ValidateInputTest {
 
     @Test
     public void whenInvalidInput() {
-        Output out = new StubOutput();
         Input in = new StubInput(
                 new String[] {"one", "1"}
         );
-        ValidateInput input = new ValidateInput(out, in);
+        ValidateInput input = new ValidateInput(in);
         int selected = input.askInt("Enter menu:");
         assertThat(selected, is(1));
     }
 
     @Test(expected = NumberFormatException.class)
     public void whenInvalidFirstPoint() {
-        Tracker tracker = new Tracker();
-        Output out = new StubOutput();
+        MemTracker memTracker = new MemTracker();
         UserAction[] actions = {
-                new ShowAllAction(out),
-                new ExitProgramAction(out),
+                new ShowAllAction(),
+                new ExitProgramAction(),
         };
         Input in = new StubInput(
                 new String[] {"73", "First"}
         );
-        new StartUI(out).init(in, tracker, actions);
+        new StartUI().init(in, memTracker, actions);
     }
 }

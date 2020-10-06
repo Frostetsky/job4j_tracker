@@ -1,6 +1,10 @@
 package ru.job4j.tracker;
 
+import java.sql.Connection;
+
 public class StartUI {
+
+    private static Connection connection;
 
     public void init(Input input, Store memTracker, UserAction[] actions) {
         boolean run = true;
@@ -25,7 +29,7 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
-        try (Store tracker = new SqlTracker()) {
+        try (Store tracker = new SqlTracker(connection)) {
             tracker.init();
             UserAction[] actions = {
                     new CreateAction(),

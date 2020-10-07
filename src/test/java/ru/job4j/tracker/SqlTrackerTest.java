@@ -1,11 +1,10 @@
-﻿package ru.job4j.tracker;
+package ru.job4j.tracker;
 
 import org.junit.Test;
 
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.is;
@@ -30,23 +29,20 @@ public class SqlTrackerTest {
     }
 
     @Test
-    public void createItem() {
+    public void createItem() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             tracker.add(new Item("Nikita"));
-            assertThat(tracker.findByName("Nikita"), is(List.of(new Item("Nikita"))));
-        } catch (Exception e) {
-            e.printStackTrace();
+            assertThat(tracker.findByName("Nikita").get(0).getName(), is("Nikita"));
         }
     }
 
     @Test
     public void deleteItem() {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item item = new Item("Mira");
-            tracker.add(item);
-            String id = item.getId();
+            tracker.add(new Item("Josh"));
+            String id = tracker.findByName("Josh").get(0).getId();
             tracker.delete(id);
-            assertThat(tracker.findAll(), is(List.of()));
+            assertThat(tracker.findAll().size(), is(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,9 +51,11 @@ public class SqlTrackerTest {
     @Test
     public void showAllItems() {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item item1 = new Item("Sergey");
-            Item item2 = new Item("Dima");
-            assertThat(tracker.findAll(), is(List.of(item1, item2)));
+            tracker.add(new Item("Nikita"));
+            tracker.add(new Item("Denis"));
+            tracker.add(new Item("Aleksandra"));
+            System.out.println(tracker.findAll());
+            assertThat(tracker.findAll().size(), is(3));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +66,10 @@ public class SqlTrackerTest {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             Item item1 = new Item("Sergey");
             Item item2 = new Item("Dima");
-            assertThat(tracker.findById(item2.getId()), is(new Item("Dima")));
+            tracker.add(item1);
+            tracker.add(item2);
+            String id = tracker.findAll().get(1).getId();
+            assertThat(tracker.findById(id).getName(), is("Dima"));
         } catch (Exception e) {
             e.printStackTrace();
         }

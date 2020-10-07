@@ -45,7 +45,7 @@ public class SqlTracker implements Store {
             st.setString(1, item.getName());
             st.executeUpdate();
             if (rs != null && rs.next()) {
-                item.setId(rs.getString(1));
+                item.setId(rs.getString("id"));
             }
         } catch (SQLException sql) {
             sql.printStackTrace();

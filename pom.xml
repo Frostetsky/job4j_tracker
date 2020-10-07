@@ -33,6 +33,18 @@
                 <database.driver>org.postgresql.Driver</database.driver>
             </properties>
         </profile>
+        <profile>
+            <id>travis</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <database.url>jdbc:postgresql://localhost/tracker</database.url>
+                <database.username>postgres</database.username>
+                <database.password>password</database.password>
+                <database.driver>org.postgresql.Driver</database.driver>
+            </properties>
+        </profile>
     </profiles>
 
     <dependencies>

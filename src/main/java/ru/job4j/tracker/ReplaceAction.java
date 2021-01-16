@@ -12,7 +12,7 @@ public class ReplaceAction implements UserAction {
         String name = input.askStr("Enter name: ");
         Item item = new Item(name);
         String id = input.askStr("Enter id: ");
-        if (store.replace(id, item)) {
+        if (store.replace(Integer.parseInt(id), item)) {
             System.out.println("Successfully");
         } else {
             System.out.println("Unsuccessfully");

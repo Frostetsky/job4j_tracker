@@ -138,7 +138,7 @@ public class StartUITest {
         Item item = memTracker.add(new Item("Replaced item"));
         String replacedName = "New item name";
         Input in = new StubInput(
-                new String[] {"0", replacedName, item.getId(), "1"}
+                new String[] {"0", replacedName, String.valueOf(item.getId()), "1"}
         );
         UserAction[] actions = {
                 new ReplaceAction(),
@@ -153,7 +153,7 @@ public class StartUITest {
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("Deleted item"));
         Input in = new StubInput(
-                new String[] {"0", item.getId(), "1"}
+                new String[] {"0", String.valueOf(item.getId()), "1"}
         );
         UserAction[] actions = {
                 new DeleteAction(),

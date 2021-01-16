@@ -10,7 +10,7 @@ public class FindItemByIdAction implements UserAction {
     @Override
     public boolean execute(Input input, Store store) {
         String id = input.askStr("Enter id: ");
-        Item item = store.findById(id);
+        Item item = store.findById(Integer.parseInt(id));
         if (item != null) {
             System.out.println(item.toString());
         } else {

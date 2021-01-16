@@ -40,7 +40,7 @@ public class SqlTrackerTest {
     public void deleteItem() {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             tracker.add(new Item("Josh"));
-            String id = tracker.findByName("Josh").get(0).getId();
+            Integer id = tracker.findByName("Josh").get(0).getId();
             tracker.delete(id);
             assertThat(tracker.findAll().size(), is(0));
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public class SqlTrackerTest {
             Item item2 = new Item("Dima");
             tracker.add(item1);
             tracker.add(item2);
-            String id = tracker.findAll().get(1).getId();
+            Integer id = tracker.findAll().get(1).getId();
             assertThat(tracker.findById(id).getName(), is("Dima"));
         } catch (Exception e) {
             e.printStackTrace();

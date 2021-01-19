@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "items")
@@ -13,6 +14,12 @@ public class Item {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
+
     public Item() {
     }
 
@@ -23,6 +30,12 @@ public class Item {
     public Item(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Item(String name, String description, Timestamp timestamp) {
+        this.name = name;
+        this.description = description;
+        this.timestamp = timestamp;
     }
 
     public Integer getId() {
@@ -41,8 +54,24 @@ public class Item {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
-        return id + " | " + name;
+        return id + " | " + name + " | " + description + " | " + timestamp;
     }
 }

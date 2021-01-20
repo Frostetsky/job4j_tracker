@@ -29,7 +29,7 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
-        try (Store tracker = new SqlTracker(connection)) {
+        try (Store tracker = new HbmTracker()) {
             tracker.init();
             UserAction[] actions = {
                     new CreateAction(),

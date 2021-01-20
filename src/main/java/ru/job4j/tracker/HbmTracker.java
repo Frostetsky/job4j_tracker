@@ -1,31 +1,28 @@
 package ru.job4j.tracker;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.sql.Timestamp;
+import javax.persistence.Query;
 import java.util.List;
 
 
-public class HibernateRun {
-    public static void main(String[] args) {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+public class HbmTracker implements Store, AutoCloseable {
+    private StandardServiceRegistry registry;
+    private SessionFactory sf;
+
+    public void init() {
+        this.registry = new StandardServiceRegistryBuilder()
                 .configure().build();
-        try {
-            SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-            Item item = new Item("Nikita", "Java Developer", new Timestamp(1982391283L));
-            create(item, sf);
-        }  catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
+        this.sf = new MetadataSources(registry)
+                .buildMetadata().buildSessionFactory();
     }
 
-    public static Item create(Item item, SessionFactory sf) {
+    public Item add(Item item) {
         try (Session session = sf.openSession()) {
             session.beginTransaction();
             session.save(item);
@@ -34,25 +31,34 @@ public class HibernateRun {
         return item;
     }
 
-    public static void update(Item item, SessionFactory sf) {
+    public boolean replace(Integer id, Item item) {
+        boolean result = true;
         try (Session session = sf.openSession()) {
+            item.setId(id);
             session.beginTransaction();
             session.update(item);
             session.getTransaction().commit();
+        } catch (HibernateException e) {
+            result = false;
         }
+        return result;
     }
 
-    public static void delete(Integer id, SessionFactory sf) {
+    public boolean delete(Integer id) {
+        boolean result = true;
         try (Session session = sf.openSession()) {
             session.beginTransaction();
             Item item = new Item(null);
             item.setId(id);
             session.delete(item);
             session.getTransaction().commit();
+        } catch (HibernateException e) {
+            result = false;
         }
+        return result;
     }
 
-    public static List<Item> findAll(SessionFactory sf) {
+    public List<Item> findAll() {
         List result;
         try (Session session = sf.openSession()) {
             session.beginTransaction();
@@ -62,7 +68,7 @@ public class HibernateRun {
         return result;
     }
 
-    public static Item findById(Integer id, SessionFactory sf) {
+    public Item findById(Integer id) {
         Item result;
         try (Session session = sf.openSession()) {
             session.beginTransaction();
@@ -70,5 +76,22 @@ public class HibernateRun {
             session.getTransaction().commit();
         }
         return result;
+    }
+
+    @Override
+    public List<Item> findByName(String key) {
+        List result;
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("from Item where name= :name");
+            query.setParameter("name", key);
+            result = query.getResultList();
+        }
+        return result;
+    }
+
+    @Override
+    public void close() throws Exception {
+        StandardServiceRegistryBuilder.destroy(registry);
     }
 }

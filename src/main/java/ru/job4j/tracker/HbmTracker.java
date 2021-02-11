@@ -1,6 +1,5 @@
 package ru.job4j.tracker;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -32,28 +31,26 @@ public class HbmTracker implements Store, AutoCloseable {
     }
 
     public boolean replace(Integer id, Item item) {
-        boolean result = true;
+        boolean result = false;
         try (Session session = sf.openSession()) {
             item.setId(id);
             session.beginTransaction();
             session.update(item);
             session.getTransaction().commit();
-        } catch (HibernateException e) {
-            result = false;
+            result = true;
         }
         return result;
     }
 
     public boolean delete(Integer id) {
-        boolean result = true;
+        boolean result = false;
         try (Session session = sf.openSession()) {
             session.beginTransaction();
             Item item = new Item(null);
             item.setId(id);
             session.delete(item);
             session.getTransaction().commit();
-        } catch (HibernateException e) {
-            result = false;
+            result = true;
         }
         return result;
     }
